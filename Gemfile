@@ -34,6 +34,7 @@ gem 'bcrypt', '~> 3.1.11'
 
 # devise for users
 gem 'devise'
+gem 'rails-ujs'
 
 
 

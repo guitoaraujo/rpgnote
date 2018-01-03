@@ -19,3 +19,46 @@
 <%= link_to 'Back', games_path %>
 
 
+<div>
+  <table>
+    <thead>
+      <th>Name</th>
+      <th>Content</th>
+      <th colspan="2"></th>
+    </thead>
+    <tbody>
+      <% @game.notes.each do |note| %>
+        <tr>
+          <td><%= note.name %></td>
+          <td><%= note.content %></td>
+          <td>
+            <button id="edit-note">Edit</button>
+            <button id="destroy-note">Destroy</button>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<%= form_for(@game.notes.build) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name, id: 'note-name' %>
+  </div>
+
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content, id: 'note-content' %>
+  </div>
+
+  <%= f.hidden_field :game_id, value: @game.id %>
+
+  <div>
+    <%= f.submit 'Create Note', id: 'note-btn' %>
+  </div>
+
+<% end %>
+

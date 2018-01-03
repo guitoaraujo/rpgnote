@@ -2,13 +2,30 @@
 <html>
   <head>
     <title>Rpgnote</title>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+
   </head>
 
   <body>
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to 'Logout', destroy_user_session_path, method: :destroy  %>
+      <% else %>
+        <%= link_to 'Login', new_user_session_path  %>
+        <%= link_to 'Sign_up', new_user_registration_path %>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>
