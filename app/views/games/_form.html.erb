@@ -21,6 +21,17 @@
     <%= form.text_area :description, id: :game_description %>
   </div>
 
+  <div class="field">
+    <%= form.label :system %>
+    <%= form.select :system, systems_traduction %>
+  </div>
+
+  <div class="field">
+    <%= form.label :privacy %>
+    <%= form.select :privacy, privacies_traduction %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>

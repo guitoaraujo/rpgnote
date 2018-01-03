@@ -18,9 +18,13 @@
         <td><%= game.name %></td>
         <td><%= game.description %></td>
         <td><%= game.user.email %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if user_signed_in? %>
+          <td><%= link_to 'Show', game unless game.system == 'Private' %></td>
+          <% if current_user == game.user %>
+            <td><%= link_to 'Edit', edit_game_path(game) %></td>
+            <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
