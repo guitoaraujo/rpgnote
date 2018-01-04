@@ -17,28 +17,32 @@
 
 <%= link_to 'Edit', edit_game_path(@game) unless @game.user != current_user %>
 
-<div>
-  <table>
-    <thead>
-      <th>Name</th>
-      <th>Content</th>
-      <th colspan="2"></th>
-    </thead>
-    <tbody>
-      <% @game.notes.each do |note| %>
-        <tr>
-          <td><%= note.name %></td>
-          <td><%= note.content %></td>
-          <td>
-          	<% if @game.user_id == current_user.id || note.user_id == current_user.id %>
-            	<button id="destroy-note">Destroy</button>
-          	<% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<% if @game.notes.count > 0 %>
+  <div>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Content</th>
+        <th colspan="2"></th>
+      </thead>
+      <tbody>
+        <% @game.notes.each do |note| %>
+          <% if show_note?(note) %>
+            <tr>
+              <td><%= note.name %></td>
+              <td><%= note.content %></td>
+              <td>
+                <% if @game.user_id == current_user.id || note.user_id == current_user.id %>
+                  <%= button_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
 
 
 <%= form_for(@game.notes.build) do |f| %>

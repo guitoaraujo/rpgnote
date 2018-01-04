@@ -37,9 +37,9 @@ en:
       dd3_5:      "D&D 3.5"
       dd4:        "D&D 4"
       dd5:        "D&D 5"
-    privacies:
-      public:     "Public"
-      restricted: "Restricted"
-      private:    "Private"
+  privacies:
+    public:     "Public"
+    restricted: "Restricted"
+    private:    "Private"
 
 

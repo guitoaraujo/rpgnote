@@ -7,5 +7,5 @@ class Game < ApplicationRecord
   validates :description, length: { minimum: 30 }
 
   enum system: [:old_dragon, :gurps, :dd3_5, :dd4, :dd5]
-  enum privacy: [:public, :restricted, :private ], _prefix: true
+  enum privacy: [:public, :restricted, :private], _prefix: true
 end
