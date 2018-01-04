@@ -13,7 +13,7 @@ $(function(){
        var name    = $(this).closest('tr').find('td:eq(0)').html();
        var content = $(this).closest('tr').find('td:eq(1)').html();
 
-       $('input#note-name').html(name);
+       $('input#note-name').val(name);
        $('textarea#note-content').html(content);
 
    });

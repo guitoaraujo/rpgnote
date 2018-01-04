@@ -15,9 +15,7 @@
   <%= @game.user.email %>
 </p>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
-
+<%= link_to 'Edit', edit_game_path(@game) unless @game.user != current_user %>
 
 <div>
   <table>
@@ -32,9 +30,9 @@
           <td><%= note.name %></td>
           <td><%= note.content %></td>
           <td>
-            <button id="edit-note">Edit</button>
-            <button id="destroy-note">Destroy</button>
-
+          	<% if @game.user_id == current_user.id || note.user_id == current_user.id %>
+            	<button id="destroy-note">Destroy</button>
+          	<% end %>
           </td>
         </tr>
       <% end %>
@@ -55,6 +53,7 @@
   </div>
 
   <%= f.hidden_field :game_id, value: @game.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
 
   <div>
     <%= f.submit 'Create Note', id: 'note-btn' %>
