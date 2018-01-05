@@ -1,4 +1,4 @@
-<%= form_with(model: game, local: true) do |form| %>
+<%= form_with(model: game, local: true, html: {class: 'form-group'}) do |form| %>
   <% if game.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
@@ -13,26 +13,25 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :game_name %>
+    <%= form.text_field :name, id: :game_name, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :description %>
-    <%= form.text_area :description, id: :game_description %>
+    <%= form.text_area :description, id: :game_description, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :system %>
-    <%= form.select :system, systems_traduction %>
+    <%= form.select :system, systems_traduction, {}, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :privacy %>
-    <%= form.select :privacy, privacies_traduction %>
+    <%= form.select :privacy, privacies_traduction, {}, class:'form-control' %>
   </div>
 
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions mt-3">
+    <%= form.submit class: 'btn btn-info' %>
   </div>
 <% end %>

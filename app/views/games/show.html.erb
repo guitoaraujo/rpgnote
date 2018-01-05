@@ -1,65 +1,75 @@
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
+<div class="container">
+  <div class="list-group">
+    <div class="list-group-item">
+      <h5 class="mb-1"><%= @game.name %></h5>
+      <p>
+        <%= @game.description %>
+      </p>
+      <small class="form-text text-muted"><%= @game.user.email %> <%=time_ago_in_words(@game.created_at) %> ago</small>
+    </div>
+    <p>
+      <strong>Name:</strong>
+      <%= @game.name %>
+    </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @game.description %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @game.description %>
+    </p>
 
-<p>
-  <strong>Master:</strong>
-  <%= @game.user.email %>
-</p>
+    <p>
+      <strong>Master:</strong>
+      <%= @game.user.email %>
+    </p>
+  </div>
+  <%= link_to 'Edit', edit_game_path(@game) unless @game.user != current_user %>
 
-<%= link_to 'Edit', edit_game_path(@game) unless @game.user != current_user %>
-
-<% if @game.notes.count > 0 %>
-  <div>
-    <table>
-      <thead>
-        <th>Name</th>
-        <th>Content</th>
-        <th colspan="2"></th>
-      </thead>
-      <tbody>
-        <% @game.notes.each do |note| %>
-          <% if show_note?(note) %>
-            <tr>
-              <td><%= note.name %></td>
-              <td><%= note.content %></td>
-              <td>
-                <% if @game.user_id == current_user.id || note.user_id == current_user.id %>
-                  <%= button_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %>
-                <% end %>
-              </td>
-            </tr>
+  <% if @game.notes.count > 0 %>
+    <div>
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Content</th>
+          <th colspan="2"></th>
+        </thead>
+        <tbody>
+          <% @game.notes.each do |note| %>
+            <% if show_note?(note) %>
+              <tr>
+                <td><%= note.name %></td>
+                <td><%= note.content %></td>
+                <td>
+                  <% if @game.user_id == current_user.id || note.user_id == current_user.id %>
+                    <%= button_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 
 
-<%= form_for(@game.notes.build) do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name, id: 'note-name' %>
-  </div>
+  <%= form_for(@game.notes.build) do |f| %>
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name, id: 'note-name' %>
+    </div>
 
-  <div>
-    <%= f.label :content %>
-    <%= f.text_area :content, id: 'note-content' %>
-  </div>
+    <div>
+      <%= f.label :content %>
+      <%= f.text_area :content, id: 'note-content' %>
+    </div>
 
-  <%= f.hidden_field :game_id, value: @game.id %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :game_id, value: @game.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
 
-  <div>
-    <%= f.submit 'Create Note', id: 'note-btn' %>
-  </div>
+    <div>
+      <%= f.submit 'Create Note', id: 'note-btn' %>
+    </div>
 
-<% end %>
+  <% end %>
 
+</div>
