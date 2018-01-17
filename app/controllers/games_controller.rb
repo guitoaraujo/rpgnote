@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :set_systems, only: [:new, :edit]
-  before_action :set_privacies, only: [:new, :edit]
+  before_action :set_privacies, only: [:new, :edit, :show]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /games
@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-  
+    @note = @game.notes.build
   end
 
   # GET /games/new
@@ -76,7 +76,8 @@ class GamesController < ApplicationController
     end
 
     def set_privacies
-      @privacies = Game.privacies.keys
+      @game_privacies = Game.privacies.keys
+      @note_privacies = Note.privacies.keys
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

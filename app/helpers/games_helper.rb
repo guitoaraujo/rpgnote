@@ -7,16 +7,25 @@ module GamesHelper
     end
   end
 
-  def privacies_traduction
-    @privacies.reduce({}) do |total, p|
-      total[t("privacies.#{p}")] = p
-      total
+  def privacies_traduction(type)
+    if type == 'g'
+      @game_privacies.reduce({}) do |total, p|
+        total[t("privacies.#{p}")] = p
+        @resp = total
+      end
     end
+    if type == 'n'
+      @note_privacies.reduce({}) do |total, p|
+        total[t("privacies.#{p}")] = p
+        @resp = total
+      end
+    end
+    @resp
   end
 
   def show_note?(note)
-    return true unless note.privacy != 'Public'
-    if note.privacy == 'Restrict'
+    return true unless note.privacy != 'public'
+    if note.privacy == 'restrict'
       if note.game.master == current_user || note.user == current_user
         return true
       end

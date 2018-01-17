@@ -1,6 +1,11 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_privacies, only: [:edit, :show]
 
+  def edit
+    @note = Note.find(params[:id])
+    @game = Game.find(params[:game_id])
+  end
   # POST /notes
   # POST /notes.json
   def create
@@ -22,7 +27,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+        format.html { redirect_to @note.game, notice: 'Note was successfully updated.' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit }
@@ -47,8 +52,12 @@ class NotesController < ApplicationController
       @note = Note.find(params[:id])
     end
 
+    def set_privacies
+      @note_privacies = Note.privacies.keys
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:name, :content, :game_id, :user_id) 
+      params.require(:note).permit(:name, :content, :game_id, :user_id, :privacy)
     end
 end

@@ -14,7 +14,7 @@
             <%= link_to 'Show', game, class: 'btn btn-sm btn-block btn-outline-info' unless game.system == 'Private' %>
             <% if current_user == game.user %>
               <%= link_to 'Edit', edit_game_path(game), class: 'btn btn-sm btn-block btn-outline-info' %>
-              <%= link_to 'Destroy', game, class: 'btn btn-sm btn-block btn-outline-info', method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'Destroy', game, class: 'btn btn-sm btn-block btn-outline-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>
           <% end %>
         </div>

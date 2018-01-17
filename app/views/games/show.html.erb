@@ -1,15 +1,18 @@
 <div class="container">
   <div class="list-group">
-    <div class="list-group-item">
+    <div class="list-group-item mb-3">
       <h5 class="mb-1"><%= @game.name %></h5>
       <p>
         <%= @game.description %>
       </p>
       <small class="form-text text-muted"><%= @game.user.email %> - <%=time_ago_in_words(@game.created_at) %> ago</small>
-      <%= link_to 'Edit', (edit_game_path(@game) unless @game.user != current_user), class: 'btn btn-sm btn-info' %>
+      <% if @game.user_id == current_user.id %>
+        <%= link_to 'Edit', edit_game_path(@game), class: 'btn btn-sm btn-info' %>
+      <% end %>
     </div>
   </div>
 
+  <%= render 'notes/form', game: @game, note: @note %>
 
   <div class="container">
     <div class="card-columns">
@@ -18,14 +21,15 @@
           <div class="card bg-dark text-light">
             <div class="card-body">
               <h5 class="card-title text-capitalize"><%= note.name %></h5>
-              <p class="card-text" style="font-size: medium"><%= truncate(note.content, length: 200) %></p>
+              <p class="card-text" style="font-size: medium"><%= note.content %></p>
               <footer class="blockquote-footer">
                 <small>
                   <cite title="Source Title"><%= note.user.email %></cite>
                 </small>
               </footer>
               <% if @game.user_id == current_user.id || note.user_id == current_user.id %>
-                <%= button_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Edit', edit_game_note_path(@game, note), class: 'btn btn-sm btn-block btn-outline-info' %>
+                <%= link_to 'Destroy', game_note_path(@game, note), class: 'btn btn-sm btn-block btn-outline-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>
             </div>
           </div>
@@ -35,24 +39,5 @@
   </div>
 
 
-  <%= form_for(@game.notes.build, html: {class: 'form-group'}) do |f| %>
-    <div>
-      <%= f.label :name %>
-      <%= f.text_field :name, id: 'note-name', class: 'form-control' %>
-    </div>
-
-    <div>
-      <%= f.label :content %>
-      <%= f.text_area :content, id: 'note-content', class: 'form-control' %>
-    </div>
-
-    <%= f.hidden_field :game_id, value: @game.id %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
-
-    <div class="actions mt-3">
-      <%= f.submit 'Create Note', id: 'note-btn', class: 'btn btn-info' %>
-    </div>
-
-  <% end %>
 
 </div>

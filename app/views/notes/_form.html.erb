@@ -1,0 +1,25 @@
+
+<%= form_for([@game, @note], html: {class: 'form-group'}) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name, id: 'note-name', class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content, id: 'note-content', class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :privacy %>
+    <%= f.select :privacy, privacies_traduction('n'), {}, class:'form-control' %>
+  </div>
+
+  <%= f.hidden_field :game_id, value: @game.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="actions mt-3">
+    <%= f.submit id: 'note-btn', class: 'btn btn-info' %>
+  </div>
+
+<% end %>
