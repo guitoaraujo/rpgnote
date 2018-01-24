@@ -13,6 +13,7 @@
   <div class="field">
     <%= f.label :privacy %>
     <%= f.select :privacy, privacies_traduction('n'), {}, class:'form-control' %>
+    <small>Public: anyone can see. Restricted: only you and the master can see. Private: only you can see.</small>
   </div>
 
   <%= f.hidden_field :game_id, value: @game.id %>

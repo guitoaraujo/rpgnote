@@ -23,14 +23,14 @@ module GamesHelper
     @resp
   end
 
-  def show_note?(note)
-    return true unless note.privacy != 'public'
-    if note.privacy == 'restrict'
-      if note.game.master == current_user || note.user == current_user
+  def show_item?(item)
+    return true unless item.privacy != 'public'
+    if item.privacy == 'restrict'
+      if item.game.master == current_user || item.user == current_user
         return true
       end
     else
-      return true unless note.user != current_user
+      return true unless item.user != current_user
     end
   end
 end

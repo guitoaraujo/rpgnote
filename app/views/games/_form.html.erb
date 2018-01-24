@@ -29,7 +29,10 @@
   <div class="field">
     <%= form.label :privacy %>
     <%= form.select :privacy, privacies_traduction('g'), {}, class:'form-control' %>
+    <small>Public: anyone can see. Restricted: only you and the gamers can see. Private: only you can see.</small>
   </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
 
   <div class="actions mt-3">
     <%= form.submit class: 'btn btn-info' %>

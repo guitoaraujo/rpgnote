@@ -1,23 +1,29 @@
 <div class="container">
   <div class="list-group">
-    <div class="list-group-item mb-3">
+    <div class="list-group-item mb-3 card bg-dark text-light">
       <h5 class="mb-1"><%= @game.name %></h5>
       <p>
         <%= @game.description %>
       </p>
-      <small class="form-text text-muted"><%= @game.user.email %> - <%=time_ago_in_words(@game.created_at) %> ago</small>
+      <small class="form-text text-muted mb-3"><%= @game.user.email %> - <%= @game.updated_at? ? time_ago_in_words(@game.updated_at) : time_ago_in_words(@game.created_at)  %> ago</small>
       <% if @game.user_id == current_user.id %>
-        <%= link_to 'Edit', edit_game_path(@game), class: 'btn btn-sm btn-info' %>
+        <%= link_to 'Edit', edit_game_path(@game), class: 'btn btn-sm btn-info mb-3' %>
       <% end %>
     </div>
   </div>
 
-  <%= render 'notes/form', game: @game, note: @note %>
+  <div class="container">
+    <% if (@game.users.include? current_user) || @game.user == current_user %>
+      <div class="list-group-item card bg-dark text-light mb-3">
+        <%= render 'notes/form', game: @game, note: @note %>
+      </div>
+    <% end %>
+  </div>
 
   <div class="container">
     <div class="card-columns">
       <% @game.notes.each do |note| %>
-        <% if show_note?(note) %>
+        <% if show_item?(note) %>
           <div class="card bg-dark text-light">
             <div class="card-body">
               <h5 class="card-title text-capitalize"><%= note.name %></h5>
@@ -37,7 +43,4 @@
       <% end %>
     </div>
   </div>
-
-
-
 </div>

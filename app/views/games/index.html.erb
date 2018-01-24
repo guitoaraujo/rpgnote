@@ -1,24 +1,26 @@
 <div class="container">
   <div class="card-columns">
     <% @games.each do |game| %>
-      <div class="card bg-dark text-light">
-        <div class="card-body">
-          <h5 class="card-title text-capitalize"><%= game.name %></h5>
-          <p class="card-text" style="font-size: medium"><%= truncate(game.description, length: 200) %></p>
-          <footer class="blockquote-footer">
-            <small>
-              <cite title="Source Title"><%= game.user.email %></cite>
-            </small>
-          </footer>
-          <% if user_signed_in? %>
-            <%= link_to 'Show', game, class: 'btn btn-sm btn-block btn-outline-info' unless game.system == 'Private' %>
-            <% if current_user == game.user %>
-              <%= link_to 'Edit', edit_game_path(game), class: 'btn btn-sm btn-block btn-outline-info' %>
-              <%= link_to 'Destroy', game, class: 'btn btn-sm btn-block btn-outline-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% if show_item?(game) %>
+        <div class="card bg-dark text-light">
+          <div class="card-body">
+            <h5 class="card-title text-capitalize"><%= game.name %></h5>
+            <p class="card-text" style="font-size: medium"><%= truncate(game.description, length: 200) %></p>
+            <footer class="blockquote-footer">
+              <small>
+                <cite title="Source Title"><%= game.user.email %></cite>
+              </small>
+            </footer>
+            <% if user_signed_in? %>
+              <%= link_to 'Show', game, class: 'btn btn-sm btn-block btn-outline-info' unless game.system == 'Private' %>
+              <% if current_user == game.user %>
+                <%= link_to 'Edit', edit_game_path(game), class: 'btn btn-sm btn-block btn-outline-info' %>
+                <%= link_to 'Destroy', game, class: 'btn btn-sm btn-block btn-outline-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>
