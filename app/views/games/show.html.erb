@@ -8,7 +8,18 @@
       <small class="form-text text-muted mb-3"><%= @game.user.email %> - <%= @game.updated_at? ? time_ago_in_words(@game.updated_at) : time_ago_in_words(@game.created_at)  %> ago</small>
       <% if @game.user_id == current_user.id %>
         <%= link_to 'Edit', edit_game_path(@game), class: 'btn btn-sm btn-info mb-3' %>
-        <%= link_to 'Add Gamers', new_gamer_path, params: { game: @game }, class: 'btn btn-sm btn-info mb-3' %>
+      <% end %>
+    </div>
+    <div class="list-group-item mb-3 card bg-dark text-light">
+      <% @game.gamers.each do |g| %>
+        <% next if g.user == current_user %>
+        <div><%= link_to 'Delete', g, method: :delete, class: 'btn btn-sm btn-danger mb-3', data: { confirm: 'Are you sure?' } %>  <%= g.user.email %></div>
+
+      <% end %>
+      <%= form_with(model: @gamer, local: true, html: {class: 'form-row align-items-center'}) do |form| %>
+        <%= form.text_field :user_email, class: 'form-control ' %>
+        <%= form.hidden_field :game_id, value: @game.id %>
+        <%= form.submit 'Add Gamer', class: 'btn btn-sm btn-info mt-3' %>
       <% end %>
     </div>
   </div>

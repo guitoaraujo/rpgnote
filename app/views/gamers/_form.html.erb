@@ -12,16 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :gamers %>
+    <%= form.label :users %>
     <% @users.each do |u| %>
       <% next if u == current_user %>
       <div class="field form-control mb-3">
-        <%= form.check_box :gamers, { multiple: true }, u, false %> <%= u.email %>
+        <%= form.check_box :users, { multiple: true }, u.id, false %> <%= u.email %>
       </div>
     <% end %>
   </div>
-
-  <%= form.hidden_field :game_id, value: :game %>
+  <%= form.hidden_field :game_id, value: @game %>
 
   <div class="actions mt-3">
     <%= form.submit class: 'btn btn-info' %>
