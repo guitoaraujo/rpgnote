@@ -1,5 +1,16 @@
 
-<%= form_for([@game, @note], html: {class: 'form-group'}) do |f| %>
+<%= form_for([game, note], html: {class: 'form-group'}) do |f| %>
+  <% if note.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
+
+      <ul>
+        <% note.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, id: 'note-name', class: 'form-control' %>
@@ -16,7 +27,7 @@
     <small>Public: anyone can see. Restricted: only you and the master can see. Private: only you can see.</small>
   </div>
 
-  <%= f.hidden_field :game_id, value: @game.id %>
+  <%= f.hidden_field :game_id, value: game.id %>
   <%= f.hidden_field :user_id, value: current_user.id %>
 
   <div class="actions mt-3">

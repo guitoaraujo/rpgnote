@@ -1,9 +1,8 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
-  before_action :set_privacies, only: [:edit, :show]
+  before_action :set_note, only: [:edit, :update, :destroy]
+  before_action :set_privacies, only: [:edit, :create]
 
   def edit
-    @note = Note.find(params[:id])
     @game = Game.find(params[:game_id])
   end
   # POST /notes
@@ -16,7 +15,9 @@ class NotesController < ApplicationController
         format.html { redirect_to game_path(@note.game_id), notice: 'Note was successfully created.' }
         format.json { render :show, status: :created, location: @note }
       else
-        format.html { render :new }
+        @game = @note.game
+
+        format.html { render "games/show", game: @game }
         format.json { render json: @note.errors, status: :unprocessable_entity }
       end
     end
