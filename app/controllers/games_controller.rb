@@ -1,8 +1,9 @@
 class GamesController < ApplicationController
-  before_action :authenticate_gamer, except: [:index, :new]
+  #before_action :authenticate_gamer, except: [:index, :new]
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   before_action :set_systems, only: [:new, :create, :edit, :show]
   before_action :set_privacies, only: [:new, :create, :edit, :show]
+  before_action :set_users, only: [:new, :show, :edit]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /games
@@ -15,7 +16,6 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     @note = @game.notes.build
-    @users = User.all
   end
 
   # GET /games/new
@@ -25,6 +25,7 @@ class GamesController < ApplicationController
 
   # GET /games/1/edit
   def edit
+    @users = User.all.order(:email)
   end
 
   # POST /games
@@ -82,6 +83,10 @@ class GamesController < ApplicationController
     @note_privacies = Note.privacies.keys
   end
 
+  def set_users
+    @users = User.all
+  end
+
   def authenticate_gamer
     @game = Game.find(params[:id])
     if @game.privacy == 'restricted'
@@ -94,6 +99,6 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:name, :description, :user_id, :system, :privacy)
+    params.require(:game).permit(:name, :description, :user_id, :system, :privacy, :gamers)
   end
 end

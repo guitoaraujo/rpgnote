@@ -8,6 +8,7 @@
       <small class="form-text text-muted mb-3"><%= @game.user.email %> - <%= @game.updated_at? ? time_ago_in_words(@game.updated_at) : time_ago_in_words(@game.created_at)  %> ago</small>
       <% if @game.user_id == current_user.id %>
         <%= link_to 'Edit', edit_game_path(@game), class: 'btn btn-sm btn-info mb-3' %>
+        <%= link_to 'Add Gamers', new_gamer_path, params: { game: @game }, class: 'btn btn-sm btn-info mb-3' %>
       <% end %>
     </div>
   </div>

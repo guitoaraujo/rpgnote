@@ -1,23 +1,18 @@
 class GamersController < ApplicationController
 
-  def create
-    @gamer = Gamer.new(gamer_params)
+  def new
+    @gamer = Gamer.new
 
-    respond_to do |format|
-      if @gamer.save
-        format.html { redirect_to @game, notice: 'Gamer was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
-      else
-        format.html { render :new }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
-    end
+    @users = User.all.order(:email)
+  end
+
+  def create
   end
 
   private
 
   def gamer_params
-    params.require(:gamer).permit(:game_id, :user_id)
+    params.require(:gamer).permit(:game_id, :gamers[])
   end
 
 end

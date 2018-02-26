@@ -1,0 +1,29 @@
+<%= form_with(model: gamer, local: true, html: {class: 'form-group'}) do |form| %>
+  <% if gamer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(gamer.errors.count, "error") %> prohibited this gamer from being saved:</h2>
+
+      <ul>
+        <% gamer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :gamers %>
+    <% @users.each do |u| %>
+      <% next if u == current_user %>
+      <div class="field form-control mb-3">
+        <%= form.check_box :gamers, { multiple: true }, u, false %> <%= u.email %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form.hidden_field :game_id, value: :game %>
+
+  <div class="actions mt-3">
+    <%= form.submit class: 'btn btn-info' %>
+  </div>
+<% end %>
